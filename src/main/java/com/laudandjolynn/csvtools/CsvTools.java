@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * Copyright (c) 2014 htd0324@gmail.com.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the GNU Public License v3.0
+ * which accompanies this distribution, and is available at
+ * http://www.gnu.org/licenses/gpl.html
+ * 
+ * Contributors:
+ *     htd0324@gmail.com - initial API and implementation
+ ******************************************************************************/
 package com.laudandjolynn.csvtools;
 
 import java.io.BufferedReader;
@@ -43,24 +53,24 @@ public class CsvTools {
 		InputStream is = null;
 		BufferedReader reader = null;
 		try {
-			is = new FileInputStream(file);
-			reader = new BufferedReader(new InputStreamReader(is));
 			String line = null;
 			int lineNumber = 0;
 			int skipLines = csvFile.getSkipLines();
 			int dataTypeLine = csvFile.getDataTypeLine();
 			List<String> dataTypeList = new ArrayList<String>();
 			List<CsvDataLine> csvDataList = new ArrayList<CsvDataLine>();
+			is = new FileInputStream(file);
+			reader = new BufferedReader(new InputStreamReader(is));
 			while ((line = reader.readLine()) != null) {
 				lineNumber++;
-				StringTokenizer tokenizer = new StringTokenizer(line, COMMA);
 				int columnIndex = 0;
-				CsvDataLine csvDataLine = new CsvDataLine();
 				int dataTypeListSize = 0;
 				if (lineNumber > skipLines) {
 					dataTypeListSize = dataTypeList == null ? 0 : dataTypeList
 							.size();
 				}
+				CsvDataLine csvDataLine = new CsvDataLine();
+				StringTokenizer tokenizer = new StringTokenizer(line, COMMA);
 				while (tokenizer.hasMoreTokens()) {
 					String token = tokenizer.nextToken();
 					CsvValue value = new CsvValue();
@@ -69,12 +79,9 @@ public class CsvTools {
 					if (lineNumber == dataTypeLine) {
 						dataTypeList.add(token.toLowerCase());
 					}
-					if (lineNumber > skipLines) {
-						value.setDataType(columnIndex >= dataTypeListSize ? DEFAULT_DATA_TYPE
-								: dataTypeList.get(columnIndex));
-					} else {
-						value.setDataType(DEFAULT_DATA_TYPE);
-					}
+					value.setDataType(lineNumber > skipLines
+							&& columnIndex < dataTypeListSize ? dataTypeList
+							.get(columnIndex) : DEFAULT_DATA_TYPE);
 					logger.debug("read data from csv file: " + value);
 					csvDataLine.add(value);
 					columnIndex++;

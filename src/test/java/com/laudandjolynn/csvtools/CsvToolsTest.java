@@ -28,4 +28,12 @@ public class CsvToolsTest extends TestCase {
 		System.out.println(data);
 		assertNotNull(data);
 	}
+
+	public void testCsvTools2() {
+		String filePath = "C:\\Users\\tdhuang\\Desktop\\功夫baby数据表格1(未加数值)\\战斗关卡地图\\rich_map.csv";
+		CsvFile csvFile = new CsvFile(filePath, 4, 2);
+		List<CsvDataLine> data = CsvTools.parse(csvFile);
+		System.out.println(data);
+		assertNotNull(data);
+	}
 }
