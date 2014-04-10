@@ -50,8 +50,12 @@ public class SqliteWriter implements CsvDataWriter {
 			connection.setAutoCommit(false);
 			Statement stmt = connection.createStatement();
 			List<CsvDataLine> csvDataList = CsvTools.parse(csvFile);
-			List<CsvValue> fields = csvDataList
-					.get(csvFile.getFieldLineIndex()).getValues();
+			int fieldLineIndex = csvFile.getFieldLineIndex();
+			if (fieldLineIndex == -1) {
+				throw new CsvException(
+						"can't find field declaration in csv file.");
+			}
+			List<CsvValue> fields = csvDataList.get(fieldLineIndex).getValues();
 			StringBuffer sbField = new StringBuffer();
 			for (CsvValue field : fields) {
 				sbField.append(field.getValue() + ",");

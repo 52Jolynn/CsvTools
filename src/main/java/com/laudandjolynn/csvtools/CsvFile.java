@@ -27,17 +27,17 @@ public class CsvFile {
 	 * @param filePath
 	 *            csv file path
 	 * @param fieldLineIndex
-	 *            index of field line
+	 *            index of field line, -1 if not exists
 	 * @param skipLines
-	 *            how many line skip to data line
+	 *            how many line skip to data line, must equal or greater than 0
 	 * @param dataTypeLineIndex
-	 *            index of data type line
+	 *            index of data type line, -1 if not exists
 	 */
 	public CsvFile(String filePath, int fieldLineIndex, int skipLines,
 			int dataTypeLineIndex) {
 		this.filePath = filePath;
 		this.fieldLineIndex = fieldLineIndex;
-		this.skipLines = skipLines;
+		this.skipLines = skipLines < 0 ? 0 : skipLines;
 		this.dataTypeLineIndex = dataTypeLineIndex;
 	}
 
