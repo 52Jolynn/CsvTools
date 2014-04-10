@@ -56,7 +56,7 @@ public class CsvTools {
 			String line = null;
 			int lineNumber = 0;
 			int skipLines = csvFile.getSkipLines();
-			int dataTypeLine = csvFile.getDataTypeLine();
+			int dataTypeLineIndex = csvFile.getDataTypeLineIndex();
 			List<String> dataTypeList = new ArrayList<String>();
 			List<CsvDataLine> csvDataList = new ArrayList<CsvDataLine>();
 			is = new FileInputStream(file);
@@ -76,7 +76,7 @@ public class CsvTools {
 					CsvValue value = new CsvValue();
 					value.setLineNumber(lineNumber);
 					value.setValue(token);
-					if (lineNumber == dataTypeLine) {
+					if (lineNumber == dataTypeLineIndex) {
 						dataTypeList.add(token.toLowerCase());
 					}
 					value.setDataType(lineNumber > skipLines

@@ -18,13 +18,27 @@ package com.laudandjolynn.csvtools;
  */
 public class CsvFile {
 	private String filePath;
+	private int fieldLineIndex;
 	private int skipLines;
-	private int dataTypeLine;
+	private int dataTypeLineIndex;
 
-	public CsvFile(String filePath, int skipLines, int dataTypeLine) {
+	/**
+	 * 
+	 * @param filePath
+	 *            csv file path
+	 * @param fieldLineIndex
+	 *            index of field line
+	 * @param skipLines
+	 *            how many line skip to data line
+	 * @param dataTypeLineIndex
+	 *            index of data type line
+	 */
+	public CsvFile(String filePath, int fieldLineIndex, int skipLines,
+			int dataTypeLineIndex) {
 		this.filePath = filePath;
+		this.fieldLineIndex = fieldLineIndex;
 		this.skipLines = skipLines;
-		this.dataTypeLine = dataTypeLine;
+		this.dataTypeLineIndex = dataTypeLineIndex;
 	}
 
 	public String getFilePath() {
@@ -35,6 +49,14 @@ public class CsvFile {
 		this.filePath = filePath;
 	}
 
+	public int getFieldLineIndex() {
+		return fieldLineIndex;
+	}
+
+	public void setFieldLineIndex(int fieldLineIndex) {
+		this.fieldLineIndex = fieldLineIndex;
+	}
+
 	public int getSkipLines() {
 		return skipLines;
 	}
@@ -43,18 +65,19 @@ public class CsvFile {
 		this.skipLines = skipLines;
 	}
 
-	public int getDataTypeLine() {
-		return dataTypeLine;
+	public int getDataTypeLineIndex() {
+		return dataTypeLineIndex;
 	}
 
-	public void setDataTypeLine(int dataTypeLine) {
-		this.dataTypeLine = dataTypeLine;
+	public void setDataTypeLineIndex(int dataTypeLineIndex) {
+		this.dataTypeLineIndex = dataTypeLineIndex;
 	}
 
 	@Override
 	public String toString() {
-		return "[filePath=" + filePath + ", skipLines=" + skipLines
-				+ ", dataTypeLine=" + dataTypeLine + "]";
+		return "[filePath=" + filePath + ", fieldLineIndex=" + fieldLineIndex
+				+ ", skipLines=" + skipLines + ", dataTypeLineIndex="
+				+ dataTypeLineIndex + "]";
 	}
 
 }
