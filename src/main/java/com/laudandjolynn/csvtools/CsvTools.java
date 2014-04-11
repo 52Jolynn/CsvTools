@@ -59,6 +59,10 @@ public class CsvTools {
 			int skipLines = csvFile.getSkipLines();
 			int dataTypeLineIndex = csvFile.getDataTypeLineIndex();
 			int[] ignoreColumnIndex = csvFile.getIgnoreColumnIndex();
+			// 排序，后面使用二分查找
+			if (ignoreColumnIndex != null) {
+				Arrays.sort(ignoreColumnIndex);
+			}
 			List<String> dataTypeList = new ArrayList<String>();
 			List<CsvDataLine> csvDataList = new ArrayList<CsvDataLine>();
 			is = new FileInputStream(file);
