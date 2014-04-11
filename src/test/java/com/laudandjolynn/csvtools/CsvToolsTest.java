@@ -23,7 +23,7 @@ import junit.framework.TestCase;
 public class CsvToolsTest extends TestCase {
 	public void testCsvTools() {
 		String filePath = "C:\\Users\\tdhuang\\Desktop\\功夫baby数据表格1(未加数值)\\关卡对应图片\\high_level_picture.csv";
-		CsvFile csvFile = new CsvFile(filePath, 1, 4, 2);
+		CsvFile csvFile = new CsvFile(filePath, 0, 4, 1);
 		List<CsvDataLine> data = CsvTools.parse(csvFile);
 		System.out.println(data);
 		assertNotNull(data);
@@ -31,9 +31,17 @@ public class CsvToolsTest extends TestCase {
 
 	public void testCsvTools2() {
 		String filePath = "C:\\Users\\tdhuang\\Desktop\\功夫baby数据表格1(未加数值)\\战斗关卡地图\\rich_map.csv";
-		CsvFile csvFile = new CsvFile(filePath, 1, 4, 2);
+		CsvFile csvFile = new CsvFile(filePath, 0, 4, 1);
 		List<CsvDataLine> data = CsvTools.parse(csvFile);
 		System.out.println(data);
 		assertNotNull(data);
+	}
+
+	public void testCsvTools3() {
+		String filePath = "C:\\Users\\tdhuang\\Desktop\\功夫baby数据表格1(未加数值)\\战斗关卡地图\\rich_map.csv";
+		CsvFile csvFile = new CsvFile(filePath, 0, 4, 1, new int[] { 0, 26 });
+		CsvDataWriter writer = new SqliteWriter("test.db", "rich_map");
+		writer.write(csvFile);
+		assertTrue(true);
 	}
 }

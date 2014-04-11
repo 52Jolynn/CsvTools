@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -57,13 +58,13 @@ public class CsvTools {
 			int lineNumber = 0;
 			int skipLines = csvFile.getSkipLines();
 			int dataTypeLineIndex = csvFile.getDataTypeLineIndex();
+			int[] ignoreColumnIndex = csvFile.getIgnoreColumnIndex();
 			List<String> dataTypeList = new ArrayList<String>();
 			List<CsvDataLine> csvDataList = new ArrayList<CsvDataLine>();
 			is = new FileInputStream(file);
 			reader = new BufferedReader(new InputStreamReader(is));
 			while ((line = reader.readLine()) != null) {
 				lineNumber++;
-				int columnIndex = 0;
 				int dataTypeListSize = 0;
 				if (lineNumber > skipLines) {
 					dataTypeListSize = dataTypeList == null ? 0 : dataTypeList
@@ -71,8 +72,15 @@ public class CsvTools {
 				}
 				CsvDataLine csvDataLine = new CsvDataLine();
 				StringTokenizer tokenizer = new StringTokenizer(line, COMMA);
+				int columnIndex = 0;
 				while (tokenizer.hasMoreTokens()) {
 					String token = tokenizer.nextToken();
+					if (ignoreColumnIndex != null
+							&& Arrays.binarySearch(ignoreColumnIndex,
+									columnIndex) >= 0) {
+						columnIndex++;
+						continue;
+					}
 					CsvValue value = new CsvValue();
 					value.setLineNumber(lineNumber);
 					value.setValue(token);

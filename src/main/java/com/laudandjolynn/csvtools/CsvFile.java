@@ -10,6 +10,8 @@
  ******************************************************************************/
 package com.laudandjolynn.csvtools;
 
+import java.util.Arrays;
+
 /**
  * @author: Laud
  * @email: htd0324@gmail.com
@@ -21,6 +23,16 @@ public class CsvFile {
 	private int fieldLineIndex;
 	private int skipLines;
 	private int dataTypeLineIndex;
+	private int[] ignoreColumnIndex;
+
+	/**
+	 * top down read
+	 * 
+	 * @param filePath
+	 */
+	public CsvFile(String filePath) {
+		this(filePath, -1, 0, -1, null);
+	}
 
 	/**
 	 * 
@@ -35,10 +47,29 @@ public class CsvFile {
 	 */
 	public CsvFile(String filePath, int fieldLineIndex, int skipLines,
 			int dataTypeLineIndex) {
+		this(filePath, fieldLineIndex, skipLines, dataTypeLineIndex, null);
+	}
+
+	/**
+	 * 
+	 * @param filePath
+	 *            csv file path
+	 * @param fieldLineIndex
+	 *            index of field line, -1 if not exists
+	 * @param skipLines
+	 *            how many line skip to data line, must equal or greater than 0
+	 * @param dataTypeLineIndex
+	 *            index of data type line, -1 if not exists
+	 * @param ignoreColumnIndex
+	 *            ignore column index, null if not exists
+	 */
+	public CsvFile(String filePath, int fieldLineIndex, int skipLines,
+			int dataTypeLineIndex, int[] ignoreColumnIndex) {
 		this.filePath = filePath;
 		this.fieldLineIndex = fieldLineIndex;
 		this.skipLines = skipLines < 0 ? 0 : skipLines;
 		this.dataTypeLineIndex = dataTypeLineIndex;
+		this.ignoreColumnIndex = ignoreColumnIndex;
 	}
 
 	public String getFilePath() {
@@ -73,11 +104,20 @@ public class CsvFile {
 		this.dataTypeLineIndex = dataTypeLineIndex;
 	}
 
+	public int[] getIgnoreColumnIndex() {
+		return ignoreColumnIndex;
+	}
+
+	public void setIgnoreColumnIndex(int[] ignoreColumnIndex) {
+		this.ignoreColumnIndex = ignoreColumnIndex;
+	}
+
 	@Override
 	public String toString() {
 		return "[filePath=" + filePath + ", fieldLineIndex=" + fieldLineIndex
 				+ ", skipLines=" + skipLines + ", dataTypeLineIndex="
-				+ dataTypeLineIndex + "]";
+				+ dataTypeLineIndex + ", ignoreColumnIndex="
+				+ Arrays.toString(ignoreColumnIndex) + "]";
 	}
 
 }
